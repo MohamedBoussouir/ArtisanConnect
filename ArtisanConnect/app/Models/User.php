@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'city',
+        'roles'
     ];
 
     /**
@@ -32,7 +35,20 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function artisanProfile()
+    {
+        return $this->hasOne(ArtisanProfile::class);
+    }
 
+    public function reviewsSent()
+    {
+        return $this->hasMany(Review::class, 'client_id');
+    }
+    public function reviewsReceived()
+    {
+        
+        return $this->hasMany(Review::class, 'artisan_id');
+    }
     /**
      * Get the attributes that should be cast.
      *
