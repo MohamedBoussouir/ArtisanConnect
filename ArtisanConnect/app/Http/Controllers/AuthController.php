@@ -42,7 +42,7 @@ class AuthController extends Controller
             'role'     => 'required|in:client,artisan',
             'city'     => 'required|string|min:4',
         ]);
-
+        // dd($request);
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,

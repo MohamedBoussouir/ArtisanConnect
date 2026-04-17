@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('roles');
             $table->string('city');
             $table->string('phone');
+            $table->string('is_bane')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

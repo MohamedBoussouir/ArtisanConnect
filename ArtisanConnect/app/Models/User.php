@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'city',
-        'roles'
+        'roles',
+        'is_bane'
     ];
 
     /**

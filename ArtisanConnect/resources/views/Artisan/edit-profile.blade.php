@@ -13,28 +13,34 @@
         <div class="p-8 text-2xl font-bold border-b border-slate-800 tracking-tight">
             Artisan<span class="text-orange-500">Connect</span>
         </div>
-        <nav class="p-4 mt-8 space-y-3">
-            <a href="{{ route('artisan.dashboard') }}" class="flex items-center py-3 px-4 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-chart-line mr-3"></i> Vue d'ensemble
-            </a>
-            <a href="#" class="flex items-center py-3 px-4 rounded-xl bg-orange-500 text-white transition shadow-lg shadow-orange-500/20">
-                <i class="fa-solid fa-user-gear mr-3"></i> Modifier Profil
-            </a>
-            <a href="#" class="flex items-center py-3 px-4 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-images mr-3"></i> Mon Portfolio
-            </a>
-            <a href="#" class="flex items-center py-3 px-4 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
-                <i class="fa-solid fa-star mr-3"></i> Avis Clients
-            </a>
-            <div class="pt-10">
-                <form action="/logout" method="POST">
-                    @csrf
-                    <button type="submit" class="flex items-center w-full py-3 px-4 rounded-xl text-red-400 hover:bg-red-500/10 transition">
+        <nav class="mt-8 p-4 space-y-3">
+                <a href="/artisan/dashboard"
+                    class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-chart-line mr-3"></i> Vue d'ensemble
+                </a>
+                <a href="{{ route('artisan.profile.edit') }}"
+                    class="flex items-center py-3 px-4 rounded-xl bg-orange-500 text-white transition shadow-lg shadow-orange-500/20">
+                    <i class="fa-solid fa-user-gear mr-3"></i> Modifier Profil
+                </a>
+                <a href="#"
+                    class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-briefcase mr-3"></i> Mes Services
+                </a>
+                <a href="{{ route('artisan.Mon_Portfolio') }}"
+                    class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-images mr-3"></i> Mon Portfolio
+                </a>
+                <a href="#"
+                    class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-star mr-3"></i> Avis Clients
+                </a>
+                <div class="pt-10">
+                    <a href="/logout"
+                        class="flex items-center py-3 px-4 rounded-xl text-red-400 hover:bg-red-500/10 transition">
                         <i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion
-                    </button>
-                </form>
-            </div>
-        </nav>
+                    </a>
+                </div>
+            </nav>
     </aside>
 
     <div class="flex-1">

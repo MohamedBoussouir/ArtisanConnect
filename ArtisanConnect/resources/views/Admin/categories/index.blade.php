@@ -15,9 +15,19 @@
         </div>
         <nav class="p-4 space-y-2">
             <a href="/admin/dashboard" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition"><i class="fa-solid fa-chart-pie mr-3"></i> Dashboard</a>
-            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition"><i class="fa-solid fa-users mr-3"></i> Utilisateurs</a>
+            <a href="users" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition"><i class="fa-solid fa-users mr-3"></i> Utilisateurs</a>
             <a href="/admin/categories" class="flex items-center p-3 rounded-lg bg-gray-800 text-white"><i class="fa-solid fa-list-check mr-3"></i> Catégories</a>
             <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition"><i class="fa-solid fa-flag mr-3"></i> Signalements</a>
+            <div class="pt-10 border-t border-gray-800 mt-10">
+                <a href="/" class="flex items-center p-3 rounded-lg hover:bg-blue-900 transition text-blue-400">
+                    <i class="fa-solid fa-house mr-3"></i> Retour au Site
+                </a>
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center p-3 rounded-lg hover:bg-red-900 transition text-red-400 mt-2">
+                        <i class="fa-solid fa-power-off mr-3"></i> Déconnexion
+                    </button>
+                </form>
         </nav>
     </aside>
 

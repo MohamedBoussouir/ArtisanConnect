@@ -32,8 +32,10 @@ Route::middleware(['Auth', 'CheckRoles'])->group(function () {
     Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {});
 });
 Route::get('admin/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+Route::put('admin/ban_user/{user}', [AdminController::class, 'ban_user'])->name('admin.ban_user');
 Route::post('admin/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
 Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
 
 Route::get('/admin/users', [userController::class, 'index'])->name('admin.users.index');
 Route::post('/admin/users/{user}/toggle', [userController::class, 'toggleStatus'])->name('admin.users.toggle');
@@ -41,4 +43,4 @@ Route::post('/admin/users/{user}/toggle', [userController::class, 'toggleStatus'
 Route::get('/artisan/profile/edit', [ArtisanController::class, 'edit'])->name('artisan.profile.edit');
 Route::put('/artisan/profile/update', [ArtisanController::class, 'update'])->name('artisan.profile.update');
 // Portfolio
-Route::get('/artisan/profile/edit', [PortfolioController::class, 'index'])->name('artisan.Mon_Portfolio');
+Route::get('/artisan/Mon_Portfolio', [PortfolioController::class, 'index'])->name('artisan.Mon_Portfolio');

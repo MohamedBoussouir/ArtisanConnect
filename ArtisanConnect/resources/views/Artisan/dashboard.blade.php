@@ -17,7 +17,7 @@
                 Artisan<span class="text-orange-500">Connect</span>
             </div>
             <nav class="mt-8 p-4 space-y-3">
-                <a href="#"
+                <a href="/artisan/dashboard"
                     class="flex items-center py-3 px-4 rounded-xl bg-orange-500 text-white transition shadow-lg shadow-orange-500/20">
                     <i class="fa-solid fa-chart-line mr-3"></i> Vue d'ensemble
                 </a>
@@ -29,7 +29,7 @@
                     class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-briefcase mr-3"></i> Mes Services
                 </a>
-                <a href="#"
+                <a href="{{ route('artisan.Mon_Portfolio') }}"
                     class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-images mr-3"></i> Mon Portfolio
                 </a>
@@ -57,7 +57,7 @@
                         <p class="text-sm font-bold text-slate-800">{{ $user->name }}</p>
                         <p class="text-xs text-orange-600 font-semibold">{{ $user->city }}</p>
                     </div>
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=f97316&color=fff"
+                    <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=f97316&color=fff"
                         class="w-12 h-12 rounded-2xl border-2 border-orange-100 shadow-sm">
                 </div>
             </header>

@@ -8,6 +8,6 @@ use Illuminate\View\View;
 class PortfolioController extends Controller
 {
     public function index(){
-        return View('')
+        return View('Artisan.Portfolio');
     }
 }
