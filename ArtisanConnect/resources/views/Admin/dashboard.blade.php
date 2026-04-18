@@ -113,19 +113,24 @@
                                 </td>
                                 <td class="p-4 text-sm text-gray-600">{{ $new->city }}</td>
                                 <td class="p-4">
-                                    <span class="flex items-center gap-1 text-green-500  font-bold"><span
-                                            class="w-2 h-2 bg-green-700 rounded-full"></span>
-                                        @if ($new->is_bane == null)
-                                             yes
-                                        @else
-                                            no
-                                        @endif
-                                    </span>
+                                    @if ($new->is_bane == null)
+                                        <span
+                                            class="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full w-fit text-xs">
+                                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                            Actif
+                                        </span>
+                                    @else
+                                        <span
+                                            class="flex items-center gap-2 text-red-600 font-bold bg-red-50 px-3 py-1 rounded-full w-fit text-xs">
+                                            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                            Banni
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="p-4 text-center">
-                                    <form action="{{ route('admin.ban_user',$new) }}" method="POST">
+                                    <form action="{{ route('admin.ban_user', $new) }}" method="POST">
                                         @csrf
-                                        @method("PUT")
+                                        @method('PUT')
                                         <button class="text-gray-400 hover:text-red-500 transition mr-2"><i
                                                 class="fa-solid fa-ban"></i></button>
                                     </form>

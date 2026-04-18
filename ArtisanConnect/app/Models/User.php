@@ -3,6 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\ArtisanProfile;
+use App\Models\Portfolio;
+use App\Models\Review;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,15 +44,23 @@ class User extends Authenticatable
     {
         return $this->hasOne(ArtisanProfile::class);
     }
+    public function portfolios()
+    {
 
+        return $this->hasMany(Portfolio::class, 'artisan_id');
+    }
     public function reviewsSent()
     {
         return $this->hasMany(Review::class, 'client_id');
     }
     public function reviewsReceived()
     {
-        
+
         return $this->hasMany(Review::class, 'artisan_id');
+    }
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'artisan_id');
     }
     /**
      * Get the attributes that should be cast.

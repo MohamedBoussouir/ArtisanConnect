@@ -60,56 +60,62 @@
 
             <div class="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
                 <table class="w-full text-left">
-                    <thead class="bg-gray-50 text-gray-400 text-xs uppercase font-black">
+                    <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
                         <tr>
-                            <th class="p-5">Profil</th>
-                            <th class="p-5">Rôle</th>
-                            <th class="p-5">Ville</th>
-                            <th class="p-5">Statut</th>
-                            <th class="p-5 text-center">Actions</th>
+                            <th class="p-4">Utilisateur</th>
+                            <th class="p-4">Rôle</th>
+                            <th class="p-4">Ville</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        @foreach($users as $user)
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center font-bold text-slate-500 uppercase">
-                                        {{ substr($user->name, 0, 1) }}
-                                    </div>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse ($users as $new)
+                            <tr>
+                                <td class="p-4 flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                        M</div>
                                     <div>
-                                        <p class="font-bold text-slate-800">{{ $user->name }}</p>
-                                        <p class="text-xs text-slate-400">{{ $user->email }}</p>
+                                        <p class="font-bold text-gray-800 text-sm">{{ $new->name }}</p>
+
                                     </div>
-                                </div>
-                            </td>
-                            <td class="p-5">
-                                @if($user->roles == 'artisan')
-                                    <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-lg text-[10px] font-black uppercase tracking-wider">Artisan</span>
-                                @elseif($user->roles == 'admin')
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-wider">Admin</span>
-                                @else
-                                    <span class="px-3 py-1 bg-green-100 text-green-600 rounded-lg text-[10px] font-black uppercase tracking-wider">Client</span>
-                                @endif
-                            </td>
-                            <td class="p-5 text-sm font-medium text-slate-600">{{ $user->city }}</td>
-                            <td class="p-5">
-                                <span class="flex items-center gap-1.5 text-green-500 text-xs font-bold">
-                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Actif
-                                </span>
-                            </td>
-                            <td class="p-5 text-center">
-                                <div class="flex justify-center gap-2">
-                                    <button title="Voir Profil" class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
-                                    <button title="Bannir" class="w-9 h-9 rounded-xl bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition">
-                                        <i class="fa-solid fa-ban"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
+                                </td>
+                                <td class="p-4">
+                                    <span
+                                        class="px-2 py-1 bg-orange-100 text-orange-600 rounded text-[10px] font-bold uppercase">{{ $new->roles }}</span>
+                                </td>
+                                <td class="p-4 text-sm text-gray-600">{{ $new->city }}</td>
+                                <td class="p-4">
+                                    @if ($new->is_bane == null)
+                                        <span
+                                            class="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full w-fit text-xs">
+                                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                            Actif
+                                        </span>
+                                    @else
+                                        <span
+                                            class="flex items-center gap-2 text-red-600 font-bold bg-red-50 px-3 py-1 rounded-full w-fit text-xs">
+                                            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                            Banni
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="p-4 text-center">
+                                    <form action="{{ route('admin.ban_user', $new) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="text-gray-400 hover:text-red-500 transition mr-2"><i
+                                                class="fa-solid fa-ban"></i></button>
+                                    </form>
+
+                                    {{-- <button class="text-gray-400 hover:text-blue-500 transition"><i --}}
+                                    {{-- class="fa-solid fa-pen-to-square"></i></button> --}}
+                                </td>
+                            </tr>
+                        @empty
+                            <h4>no news</h4>
+                        @endforelse
                     </tbody>
                 </table>
                 

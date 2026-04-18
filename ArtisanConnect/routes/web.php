@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtisanController;
+use App\Http\Controllers\ArtisanProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\userController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +45,18 @@ Route::post('/admin/users/{user}/toggle', [userController::class, 'toggleStatus'
 Route::get('/artisan/profile/edit', [ArtisanController::class, 'edit'])->name('artisan.profile.edit');
 Route::put('/artisan/profile/update', [ArtisanController::class, 'update'])->name('artisan.profile.update');
 // Portfolio
-Route::get('/artisan/Mon_Portfolio', [PortfolioController::class, 'index'])->name('artisan.Mon_Portfolio');
+// Route::get('/artisan/Mon_Portfolio', [PortfolioController::class, 'index'])->name('artisan.Mon_Portfolio');
+
+
+Route::get('/artisan/Mon_Portfolio', [ArtisanProfileController::class, 'index'])->name('artisan.Mon_Portfolio');
+
+// مسار حفظ صورة جديدة
+Route::post('/portfolio/store', [ArtisanProfileController::class, 'store'])->name('artisan.portfolio.store');
+
+// مسار حذف صورة
+Route::delete('/portfolio/{portfolio}', [ArtisanProfileController::class, 'destroy'])->name('artisan.portfolio.destroy');
+
+
+Route::get('/services', [ServiceController::class, 'index'])->name('artisan.services.index');
+Route::post('/services/store', [ServiceController::class, 'store'])->name('artisan.services.store');
+Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('artisan.services.destroy');

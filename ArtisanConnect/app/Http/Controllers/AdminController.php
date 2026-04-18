@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -30,6 +31,10 @@ class AdminController extends Controller
 
     public function ban_user(user $user)
     {
+
+        if (Auth()->id() == $user->id) {
+            return redirect()->back();
+        }
         if ($user->is_bane == 'no') {
 
             $user->is_bane = '';
@@ -38,6 +43,6 @@ class AdminController extends Controller
             $user->is_bane = 'no';
         }
         $user->update();
-        return Redirect('/admin/dashboard');
+        return redirect()->back();
     }
 }
