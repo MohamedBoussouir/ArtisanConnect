@@ -57,7 +57,7 @@
                         <p class="text-sm font-bold text-slate-800">{{ $user->name }}</p>
                         <p class="text-xs text-orange-600 font-semibold">{{ $user->city }}</p>
                     </div>
-                    <img src="https://ui-avatars.com/api/?name={{$user->name}}&background=f97316&color=fff"
+                    <img src="https://ui-avatars.com/api/?name={{ $user->name }}&background=f97316&color=fff"
                         class="w-12 h-12 rounded-2xl border-2 border-orange-100 shadow-sm">
                 </div>
             </header>
@@ -130,39 +130,45 @@
 
                 <div class="bg-white rounded-3xl shadow-sm p-8 border border-slate-100">
                     <h3 class="text-lg font-bold text-slate-800 mb-6">Portfolio Récent</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div
-                            class="aspect-square bg-slate-100 rounded-2xl border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 hover:border-orange-500 hover:text-orange-500 cursor-pointer transition">
-                            <i class="fa-solid fa-plus text-2xl"></i>
-                        </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                        @foreach ($portfolios as $work)
+                            <div
+                                class="group relative bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 aspect-square">
+                                <img src="{{ asset('storage/' . $work->image_path) }}" alt="{{ $work->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                                    <h4 class="text-white font-bold text-sm truncate">{{ $work->title }}</h4>
+                                    <p class="text-slate-300 text-[10px] mb-3">{{ $work->created_at->format('d M Y') }}
+                                    </p>
+
+                                    <form action="{{ route('artisan.portfolio.destroy', $work->id) }}" method="POST"
+                                        onsubmit="return confirm('Supprimer ce travail ?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="w-full py-1.5 bg-red-500/20 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/50 rounded-lg text-[10px] font-black transition">
+                                            <i class="fa-solid fa-trash-can mr-1"></i> SUPPRIMER
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <a href="{{ route('artisan.Mon_Portfolio') }}"
+                            class="aspect-square bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-400 hover:border-orange-500 hover:text-orange-500 hover:bg-orange-50 transition-all duration-300 group">
+                            <i class="fa-solid fa-plus text-2xl mb-2 group-hover:scale-110 transition"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-wider">Ajouter</span>
+                        </a>
+
                     </div>
                 </div>
-            </div>
 
-            <div class="space-y-6">
-                <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl shadow-lg p-8 text-white">
-                    <h3 class="font-bold text-xl mb-2">Visibilité Premium</h3>
-                    <p class="text-orange-100 text-sm mb-6">Boostez votre profil pour apparaître en tête des recherches
-                        à {{ $user->city }}.</p>
-                    <button
-                        class="w-full py-3 bg-white text-orange-600 font-bold rounded-xl shadow-sm hover:bg-orange-50 transition">
-                        En savoir plus
-                    </button>
-                </div>
 
-                <div class="bg-white rounded-3xl shadow-sm p-8 border border-slate-100">
-                    <h3 class="font-bold text-slate-800 mb-4">Informations de contact</h3>
-                    <div class="space-y-3">
-                        <p class="text-sm text-slate-600"><i class="fa-solid fa-phone mr-2 text-blue-500"></i>
-                            {{ $user->phone }}</p>
-                        <p class="text-sm text-slate-600"><i class="fa-solid fa-envelope mr-2 text-blue-500"></i>
-                            {{ $user->email }}</p>
-                        <p class="text-sm text-slate-600"><i class="fa-solid fa-location-dot mr-2 text-blue-500"></i>
-                            {{ $user->city }}</p>
-                    </div>
-                </div>
             </div>
-    </div>
     </div>
     </main>
     </div>

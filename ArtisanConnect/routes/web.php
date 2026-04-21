@@ -13,16 +13,17 @@ use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 
 // ---------------------------Visiteur---------------------------
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ClientController::class, 'index']);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // ---------------------------Auth---------------------------
 Route::get('/login', [AuthController::class, 'show_login']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'show_register']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // ---------------------------User---------------------------
 
 Route::middleware(['Auth', 'CheckRoles'])->group(function () {
@@ -60,3 +61,5 @@ Route::delete('/portfolio/{portfolio}', [ArtisanProfileController::class, 'destr
 Route::get('/services', [ServiceController::class, 'index'])->name('artisan.services.index');
 Route::post('/services/store', [ServiceController::class, 'store'])->name('artisan.services.store');
 Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('artisan.services.destroy');
+
+Route::get('/search', [ClientController::class, 'search'])->name('artisans.search');

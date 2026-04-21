@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('artisan_id')->constrained('users')->onDelete('cascade');
-
             $table->string('title');
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2)->nullable();
             $table->string('duration')->nullable();
-
             $table->timestamps();
         });
     }

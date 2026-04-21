@@ -10,10 +10,10 @@ class ArtisanProfileController extends Controller
 {
     public function index()
     {
-
+        $user = auth()->user();
         $portfolios = auth()->user()->portfolios()->latest()->get();
 
-        return view('Artisan.portfolio', compact('portfolios'));
+        return view('Artisan.portfolio', compact('portfolios', 'user'));
     }
     public function store(Request $request)
     {

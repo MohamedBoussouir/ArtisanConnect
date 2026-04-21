@@ -19,11 +19,14 @@ class ArtisanController extends Controller
 
             'new_reviews' => $user->reviewsReceived()->whereDate('created_at', now())->count()
         ];
+        $portfolios = auth()->user()->portfolios()->latest()->get();
+
 
         return view('Artisan.dashboard', [
             'user' => $user,
             'stats' => $stats,
-            'artisanProfile' => $artisanProfile
+            'artisanProfile' => $artisanProfile,
+            'portfolios' => $portfolios
         ]);
     }
     public function edit()

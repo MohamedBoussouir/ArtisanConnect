@@ -37,6 +37,7 @@ class CheckRoles
                 break;
             case 'client':
                 // echo 'client';
+                // dd();
                 return redirect()->route('client.dashboard');
                 break;
         }

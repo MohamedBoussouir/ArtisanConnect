@@ -21,73 +21,132 @@
 
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
+            <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
-                    <span class="text-2xl font-bold text-blue-700">Artisan<span
-                            class="text-orange-500">Connect</span></span>
+                    <a href="/" class="text-2xl font-black text-blue-700">
+                        Artisan<span class="text-orange-500">Connect</span>
+                    </a>
                 </div>
+
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#" class="text-gray-600 hover:text-blue-700 transition">Accueil</a>
-                    <a href="#categories" class="text-gray-600 hover:text-blue-700 transition">Métiers</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-700 transition">Comment ça marche</a>
-                    @if (Auth()->user() == null)
-                        <a href="/login" class="text-gray-700 font-medium">Connexion</a>
+                    <a href="/"
+                        class="text-gray-600 hover:text-blue-700 font-bold text-sm uppercase tracking-widest transition">Accueil</a>
+                    <a href="#categories"
+                        class="text-gray-600 hover:text-blue-700 font-bold text-sm uppercase tracking-widest transition">Métiers</a>
+
+                    @guest
+                        <div class="h-6 w-px bg-gray-200 mx-2"></div>
+                        <a href="/login"
+                            class="text-gray-700 font-bold text-sm hover:text-blue-700 transition">Connexion</a>
                         <a href="/register"
-                            class="bg-blue-700 text-white px-5 py-2 rounded-lg hover:bg-blue-800 transition shadow-md">S'inscrire</a>
-                    @else
-                        <a href="/logout"
-                            class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition shadow-md font-medium text-sm">
-                            <i class="fa-solid fa-right-from-bracket mr-2"></i>Se déconnecter
+                            class="bg-blue-700 text-white px-6 py-2.5 rounded-xl hover:bg-blue-800 transition shadow-lg shadow-blue-200 font-bold text-sm">
+                            S'inscrire
                         </a>
-                    @endif
+                    @endguest
+
+                    @auth
+                        <div class="flex items-center gap-6 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
+
+                            <div class="flex items-center gap-2 border-r pr-4 border-slate-200">
+                                <button title="Mes Favoris"
+                                    class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-orange-500 transition hover:bg-white rounded-lg">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                                <a href="/profile/settings" title="Paramètres"
+                                    class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-blue-700 transition hover:bg-white rounded-lg">
+                                    <i class="fa-solid fa-user-gear"></i>
+                                </a>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="text-right">
+                                    <p class="text-xs font-black text-slate-800 leading-none">{{ Auth::user()->name }}</p>
+                                    <span class="text-[9px] text-orange-600 font-black uppercase tracking-tighter">Membre
+                                        Particulier</span>
+                                </div>
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=1E3A8A&color=fff"
+                                    class="w-9 h-9 rounded-xl shadow-sm border-2 border-white">
+                            </div>
+
+                            <div class="border-l pl-4 border-slate-200">
+                                <a href="{{ route('logout') }}" class="text-slate-400 hover:text-red-500 transition">
+                                    <i class="fa-solid fa-power-off"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
+
                 <div class="md:hidden flex items-center">
                     <button class="text-gray-600 focus:outline-none">
-                        <i class="fa-solid fa-bars text-2xl"></i>
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <section class="hero-gradient py-20 px-4 text-center text-white">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                Trouvez l'artisan de confiance pour vos travaux
+    @auth
+        @if (auth()->user()->roles == 'user')
+            <section class="max-w-7xl mx-auto px-4 -mt-12 relative z-10">
+                <div
+                    class="bg-white rounded-3xl shadow-2xl p-6 border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 transition-all hover:shadow-orange-500/5">
+                    <div class="flex items-center gap-5">
+                        <div
+                            class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center shadow-inner text-xl">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-slate-800 text-lg">Ravi de vous revoir,
+                                {{ explode(' ', auth()->user()->name)[0] }}!</h4>
+                            <p class="text-sm text-slate-500 font-medium">Vous avez <span
+                                    class="text-orange-600 font-bold">3</span> interventions terminées à évaluer.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <a href="#history"
+                            class="flex-1 md:flex-none text-center px-6 py-3.5 bg-slate-100 text-slate-700 rounded-2xl font-bold text-sm hover:bg-slate-200 transition">
+                            <i class="fa-solid fa-clock-rotate-left mr-2"></i> Historique
+                        </a>
+                        <a href="#categories"
+                            class="flex-1 md:flex-none text-center px-8 py-3.5 bg-blue-700 text-white rounded-2xl font-bold text-sm hover:bg-blue-800 transition shadow-lg shadow-blue-200 uppercase tracking-widest">
+                            Trouver un artisan
+                        </a>
+                    </div>
+                </div>
+            </section>
+        @endif
+    @endauth
+
+    <section class="hero-gradient py-28 px-4 text-center text-white relative">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
+                Réalisez vos projets <br>
+                <span class="text-orange-500">en un clic.</span>
             </h1>
-            <p class="text-xl md:text-2xl mb-10 text-gray-200">
-                La première plateforme de mise en relation avec les artisans qualifiés au Maroc.
+            <p class="text-xl md:text-2xl mb-12 text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed">
+                Trouvez instantanément des artisans qualifiés au Maroc pour tous vos besoins domestiques.
             </p>
 
-            <form action="/search" method="GET"
-                class="bg-white p-3 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-3 max-w-3xl mx-auto">
-                <div class="flex-1 relative">
-                    <i class="fa-solid fa-hammer absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <select name="category"
-                        class="w-full pl-10 pr-4 py-3 bg-gray-50 border-none rounded-xl text-gray-700 focus:ring-2 focus:ring-blue-500 appearance-none">
-                        <option value="">Quel métier ?</option>
-                        <option value="plombier">Plombier</option>
-                        <option value="electricien">Électricien</option>
-                        <option value="peintre">Peintre</option>
-                        <option value="menuisier">Menuisier</option>
-                    </select>
-                </div>
-                <div class="flex-1 relative">
-                    <i class="fa-solid fa-location-dot absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <select name="city"
-                        class="w-full pl-10 pr-4 py-3 bg-gray-50 border-none rounded-xl text-gray-700 focus:ring-2 focus:ring-blue-500 appearance-none">
-                        <option value="">Dans quelle ville ?</option>
-                        <option value="casablanca">Casablanca</option>
-                        <option value="rabat">Rabat</option>
-                        <option value="marrakech">Marrakech</option>
-                        <option value="tanger">Tanger</option>
-                    </select>
-                </div>
-                <button type="submit"
-                    class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition duration-300 shadow-lg">
-                    Rechercher
-                </button>
-            </form>
+            
+
+            <div class="mt-10">
+                <a href="{{ route('artisans.search') }}"
+                    class="inline-flex items-center gap-4 bg-orange-500 hover:bg-orange-600 text-white font-black py-5 px-12 rounded-[2.5rem] transition-all duration-300 shadow-2xl hover:scale-105 active:scale-95 border-4 border-white/20 uppercase tracking-widest text-lg shadow-orange-500/20">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Trouver un service
+                </a>
+
+                <p class="mt-6 text-blue-200 text-sm font-bold opacity-80 uppercase tracking-widest">
+                    Plomberie, Électricité, Peinture et plus...
+                </p>
+            </div>
+
+            <p class="mt-6 text-sm text-blue-200 font-bold flex items-center justify-center gap-2">
+                <i class="fa-solid fa-shield-halved"></i>
+                Plus de 1500 artisans vérifiés à votre service
+            </p>
         </div>
     </section>
 

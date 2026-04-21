@@ -22,7 +22,7 @@
                     class="flex items-center py-3 px-4 rounded-xl bg-orange-500 text-white transition shadow-lg shadow-orange-500/20">
                     <i class="fa-solid fa-user-gear mr-3"></i> Modifier Profil
                 </a>
-                <a href="#"
+                <a href="{{ route('artisan.services.index') }}"
                     class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-briefcase mr-3"></i> Mes Services
                 </a>
