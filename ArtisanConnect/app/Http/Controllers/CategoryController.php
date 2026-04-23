@@ -31,7 +31,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories',
-            'icon' => 'nullable|string', // هنا يمكنك وضع اسم كلاس FontAwesome
+            'icon' => 'nullable|string', 
         ]);
 
         Category::create($request->all());

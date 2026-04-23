@@ -4,7 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\ArtisanProfileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ServiceController;
@@ -50,16 +52,29 @@ Route::put('/artisan/profile/update', [ArtisanController::class, 'update'])->nam
 
 
 Route::get('/artisan/Mon_Portfolio', [ArtisanProfileController::class, 'index'])->name('artisan.Mon_Portfolio');
+Route::get('/artisan/profile/{id}', [ClientController::class, 'showProfile'])->name('artisan.profile');
 
-// مسار حفظ صورة جديدة
+
 Route::post('/portfolio/store', [ArtisanProfileController::class, 'store'])->name('artisan.portfolio.store');
 
-// مسار حذف صورة
+
 Route::delete('/portfolio/{portfolio}', [ArtisanProfileController::class, 'destroy'])->name('artisan.portfolio.destroy');
 
 
 Route::get('/services', [ServiceController::class, 'index'])->name('artisan.services.index');
 Route::post('/services/store', [ServiceController::class, 'store'])->name('artisan.services.store');
 Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('artisan.services.destroy');
+Route::get('/service/{id}', [ClientController::class, 'showService'])->name('services.show');
 
 Route::get('/search', [ClientController::class, 'search'])->name('artisans.search');
+
+
+Route::get('/admin/City', [CityController::class, 'index'])->name('cities.index');
+Route::post('/admin/cities', [CityController::class, 'store'])->name('City.store');
+Route::delete('/admin/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+
+
+Route::get('/artisan/bookings', [BookingController::class, 'index'])->name('artisan.bookings');
+Route::get('/service/{id}/book', [BookingController::class, 'create'])->name('bookings.create');
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');

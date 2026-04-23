@@ -20,6 +20,10 @@
                 class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                 <i class="fa-solid fa-chart-line mr-3"></i> Vue d'ensemble
             </a>
+            <a href="{{ route('artisan.bookings') }}"
+                class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition {{ request()->routeIs('artisan.bookings') ? 'bg-slate-800 text-white' : '' }}">
+                <i class="fa-solid fa-calendar-check mr-3"></i> Mes Réservations
+            </a>
             <a href="{{ route('artisan.profile.edit') }}"
                 class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                 <i class="fa-solid fa-user-gear mr-3"></i> Modifier Profil
@@ -48,12 +52,13 @@
     <main class="flex-1">
         <header class="bg-white border-b p-4 flex justify-between items-center px-8">
             <h2 class="text-xl font-black text-slate-800 uppercase tracking-wide">Gestion du Portfolio</h2>
-           <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-6">
                 <div class="text-right hidden sm:block">
                     <p class="text-sm font-bold text-slate-800">{{ $user->name }}</p>
                     <p class="text-xs text-orange-600 font-semibold">{{ $user->city }}</p>
                 </div>
-                <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=f97316&color=fff" class="w-12 h-12 rounded-2xl border-2 border-orange-100 shadow-sm">
+                <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=f97316&color=fff"
+                    class="w-12 h-12 rounded-2xl border-2 border-orange-100 shadow-sm">
             </div>
         </header>
 

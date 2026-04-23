@@ -21,6 +21,10 @@
                     class="flex items-center py-3 px-4 rounded-xl bg-orange-500 text-white transition shadow-lg shadow-orange-500/20">
                     <i class="fa-solid fa-chart-line mr-3"></i> Vue d'ensemble
                 </a>
+                <a href="{{ route('artisan.bookings') }}"
+                    class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition {{ request()->routeIs('artisan.bookings') ? 'bg-slate-800 text-white' : '' }}">
+                    <i class="fa-solid fa-calendar-check mr-3"></i> Mes Réservations
+                </a>
                 <a href="{{ route('artisan.profile.edit') }}"
                     class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-user-gear mr-3"></i> Modifier Profil
