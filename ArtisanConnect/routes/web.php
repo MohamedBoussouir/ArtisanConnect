@@ -33,9 +33,18 @@ Route::middleware(['Auth', 'CheckRoles'])->group(function () {
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/artisan/dashboard', [ArtisanController::class, 'index'])->name('artisan.dashboard');
-    Route::get('/client/dashboard', [ClientController::class, 'index'])->name('client.dashboard');
+    Route::get('/client', [ClientController::class, 'index'])->name('client');
     Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {});
 });
+
+
+
+Route::get('/user/dashboard', [ClientController::class, 'dashboard'])->name('client.dashboard');
+Route::get('/client/bookings', [ClientController::class, 'bookings'])->middleware('auth')->name('client.bookings');
+Route::delete('/client/bookings/{id}', [ClientController::class, 'destroy'])->name('client.bookings.destroy');
+Route::get('/profile/settings', [userController::class, 'profile_edit'])->middleware('auth')->name('client.profile');
+Route::put('/profile/settings', [userController::class, 'profile_update'])->name('client.profile.update');
+
 Route::get('admin/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
 Route::put('admin/ban_user/{user}', [AdminController::class, 'ban_user'])->name('admin.ban_user');
 Route::post('admin/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
@@ -47,8 +56,9 @@ Route::post('/admin/users/{user}/toggle', [userController::class, 'toggleStatus'
 
 Route::get('/artisan/profile/edit', [ArtisanController::class, 'edit'])->name('artisan.profile.edit');
 Route::put('/artisan/profile/update', [ArtisanController::class, 'update'])->name('artisan.profile.update');
-// Portfolio
-// Route::get('/artisan/Mon_Portfolio', [PortfolioController::class, 'index'])->name('artisan.Mon_Portfolio');
+
+
+Route::get('/artisan/profile/settings', [ArtisanController::class, 'settings'])->name('artisan.profile');
 
 
 Route::get('/artisan/Mon_Portfolio', [ArtisanProfileController::class, 'index'])->name('artisan.Mon_Portfolio');

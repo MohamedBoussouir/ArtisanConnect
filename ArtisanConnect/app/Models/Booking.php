@@ -13,7 +13,8 @@ class Booking extends Model
         'appointment_date',
         'appointment_time',
         'issue_description',
-        'status'
+        'status',
+        
     ];
     public function service()
     {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Auth;
+use App\Models\Booking;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Service;
@@ -12,7 +14,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        // dd();
+
 
         $user = auth()->user();
         $categories = Category::all();
@@ -53,9 +55,45 @@ class ClientController extends Controller
     }
     public function showProfile($id)
     {
-        
+
         $artisan = User::with('services.category', 'services.city')->where('roles', 'artisan')->findOrFail($id);
 
         return view('client.artisan_profile', compact('artisan'));
+    }
+    public function dashboard()
+    {
+
+        $myBookings = Booking::with(['service', 'artisan'])
+            ->where('user_id', Auth()->id())
+            ->latest()
+            ->get();
+        $stats = [
+            'pending' => $myBookings->where('status', 'pending')->count(),
+            'accepted' => $myBookings->where('status', 'accepted')->count(),
+            'total' => $myBookings->count(),
+        ];
+
+        return view('client.dashboard', compact('myBookings', 'stats'));
+    }
+    public function bookings()
+    {
+
+        $bookings = \App\Models\Booking::with(['service', 'artisan'])
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('client.bookings', compact('bookings'));
+    }
+    public function destroy($id)
+    {
+
+        $booking = \App\Models\Booking::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $booking->delete();
+
+        return back()->with('success', 'La réservation a été annulée.');
     }
 }

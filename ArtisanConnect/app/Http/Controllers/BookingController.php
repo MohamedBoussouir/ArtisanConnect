@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\Auth;
 use App\Models\Booking;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -26,13 +27,13 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
 
-        
+
         if ($booking->artisan_id !== auth()->id()) {
             return back();
         }
 
         $booking->update([
-            'status' => $request->status 
+            'status' => $request->status
         ]);
 
         $message = $request->status == 'accepted' ? 'Demande acceptée !' : 'Demande refusée.';
@@ -43,7 +44,7 @@ class BookingController extends Controller
      */
     public function create($id)
     {
-        $service = \App\Models\Service::findOrFail($id);
+        $service = Service::findOrFail($id);
 
         return view('client.booking_create', compact('service'));
     }
@@ -53,28 +54,30 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'service_id' => 'required',
             'artisan_id' => 'required',
-            'appointment_date' => 'required|date|after_or_equal:today',
+            'appointment_date' => 'required|date',
             'appointment_time' => 'required',
-            'issue_description' => 'required|string|min:10',
+            'duration_hours' => 'required|integer|min:1',
         ]);
 
+        $requestedStart = $request->appointment_time;
 
-        Booking::create([
-            'user_id' => auth()->id(),
-            'service_id' => $request->service_id,
-            'artisan_id' => $request->artisan_id,
-            'appointment_date' => $request->appointment_date,
-            'appointment_time' => $request->appointment_time,
-            'issue_description' => $request->issue_description,
-        ]);
+        $requestedEnd = date('H:i:s', strtotime("$requestedStart + $request->duration_hours hours"));
 
 
-        return redirect()->route('services.show', $request->service_id)
-            ->with('success', 'Votre demande a été envoyée avec succès !');
+        $isBusy = Booking::where('artisan_id', $request->artisan_id)
+            ->where('appointment_date', $request->appointment_date)
+            ->where(function ($query) use ($requestedStart, $requestedEnd) {
+                $query->whereBetween('appointment_time', [$requestedStart, $requestedEnd])
+                    ->orWhereRaw('? BETWEEN appointment_time AND 
+                        DATE_ADD(appointment_time, INTERVAL duration_hours HOUR)', [$requestedStart]);
+            })
+            ->exists();
+
+        if ($isBusy) {
+            return back()->with('error', 'L\'artisan est occupé خلال هذه الفترة. يرجى اختيار وقت آخر.');
+        }
     }
 
     /**

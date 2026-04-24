@@ -42,6 +42,11 @@
                     <i class="fa-solid fa-star mr-3"></i> Avis Clients
                 </a>
                 <div class="pt-10">
+                    <a href="{{ route('artisan.profile') }}"
+                        class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium">
+                        <i class="fa-solid fa-user-gear mr-3"></i>
+                        Mon Profil
+                    </a>
                     <a href="/logout"
                         class="flex items-center py-3 px-4 rounded-xl text-red-400 hover:bg-red-500/10 transition">
                         <i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion

@@ -39,16 +39,25 @@
                         <a href="/login"
                             class="text-gray-700 font-bold text-sm hover:text-blue-700 transition">Connexion</a>
                         <a href="/register"
-                            class="bg-blue-700 text-white px-6 py-2.5 rounded-xl hover:bg-blue-800 transition shadow-lg shadow-blue-200 font-bold text-sm">S'inscrire</a>
+                            class="bg-blue-700 text-white px-6 py-2.5 rounded-xl hover:bg-blue-800 transition shadow-lg shadow-blue-200 font-bold text-sm">
+                            S'inscrire
+                        </a>
                     @endguest
 
                     @auth
                         <div class="flex items-center gap-6 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
+
                             <div class="flex items-center gap-2 border-r pr-4 border-slate-200">
+                                <a href="/user/dashboard" title="Tableau de bord"
+                                    class="w-9 h-9 flex items-center justify-center text-blue-700 hover:bg-blue-700 hover:text-white transition bg-white rounded-lg shadow-sm border border-blue-100">
+                                    <i class="fa-solid fa-gauge-high text-sm"></i>
+                                </a>
+
                                 <button title="Mes Favoris"
                                     class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-orange-500 transition hover:bg-white rounded-lg">
                                     <i class="fa-solid fa-heart"></i>
                                 </button>
+
                                 <a href="/profile/settings" title="Paramètres"
                                     class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-blue-700 transition hover:bg-white rounded-lg">
                                     <i class="fa-solid fa-user-gear"></i>
@@ -58,8 +67,9 @@
                             <div class="flex items-center gap-3">
                                 <div class="text-right">
                                     <p class="text-xs font-black text-slate-800 leading-none">{{ Auth::user()->name }}</p>
-                                    <span class="text-[9px] text-orange-600 font-black uppercase tracking-tighter">Membre
-                                        Particulier</span>
+                                    <span class="text-[9px] text-orange-600 font-black uppercase tracking-tighter">
+                                        {{ Auth::user()->role === 'artisan' ? 'Artisan Partenaire' : 'Membre Particulier' }}
+                                    </span>
                                 </div>
                                 <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=1E3A8A&color=fff"
                                     class="w-9 h-9 rounded-xl shadow-sm border-2 border-white">
@@ -69,9 +79,16 @@
                                 <a href="{{ route('logout') }}" class="text-slate-400 hover:text-red-500 transition">
                                     <i class="fa-solid fa-power-off"></i>
                                 </a>
+
                             </div>
                         </div>
                     @endauth
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
                 </div>
             </div>
         </div>

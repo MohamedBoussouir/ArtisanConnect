@@ -48,7 +48,7 @@
                         <div class="flex items-center gap-6 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
 
                             <div class="flex items-center gap-2 border-r pr-4 border-slate-200">
-                                <a href="/artisan/dashboard" title="Tableau de bord"
+                                <a href="/user/dashboard" title="Tableau de bord"
                                     class="w-9 h-9 flex items-center justify-center text-blue-700 hover:bg-blue-700 hover:text-white transition bg-white rounded-lg shadow-sm border border-blue-100">
                                     <i class="fa-solid fa-gauge-high text-sm"></i>
                                 </a>
@@ -77,9 +77,9 @@
 
                             <div class="border-l pl-4 border-slate-200">
                                 <a href="{{ route('logout') }}" class="text-slate-400 hover:text-red-500 transition">
-    <i class="fa-solid fa-power-off"></i>
-</a>
-                                
+                                    <i class="fa-solid fa-power-off"></i>
+                                </a>
+
                             </div>
                         </div>
                     @endauth

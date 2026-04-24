@@ -15,33 +15,31 @@ class CheckRoles
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (empty(Auth()->user()->roles)) {
+        if (empty(auth()->user()->roles)) {
             return redirect('/');
         }
-        $role = (Auth()->user()->roles);
+
+        $role = auth()->user()->roles;
+
+       
         if (
-            ($role === 'Admin' && $request->is('admin/*')) ||
-            ($role === 'artisan' && $request->is('artisan/*')) ||
-            ($role === 'client' && $request->is('client/*'))
+            ($role === 'Admin' && ($request->is('admin') || $request->is('admin/*'))) ||
+            ($role === 'artisan' && ($request->is('artisan') || $request->is('artisan/*'))) ||
+            ($role === 'client' && ($request->is('client') || $request->is('client/*')))
         ) {
             return $next($request);
         }
-        switch (Auth()->user()->roles) {
-            case 'Admin':
-                // echo 'Admin';
-                return redirect()->route('admin.dashboard');
-                break;
-            case 'artisan':
-                // echo 'artisan';
-                return redirect()->route('artisan.dashboard');
-                break;
-            case 'client':
-                // echo 'client';
-                // dd();
-                return redirect()->route('client.dashboard');
-                break;
-        }
 
-        return $next($request);
+        
+        switch ($role) {
+            case 'Admin':
+                return redirect()->route('admin.dashboard');
+            case 'artisan':
+                return redirect()->route('artisan.dashboard');
+            case 'client':
+                return redirect()->route('client');
+            default:
+                return redirect('/');
+        }
     }
 }

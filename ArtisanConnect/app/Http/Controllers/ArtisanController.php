@@ -40,12 +40,33 @@ class ArtisanController extends Controller
 
     public function update(Request $request)
     {
+        $user = auth()->user();
+
+
+        // dd($request);
         $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:20',
+            'city' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'bio' => 'nullable|string|max:1500',
+            'password' => 'nullable|min:8|confirmed',
         ]);
 
-        $user = auth()->user();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'city' => $request->city,
+        ]);
+
+
+        if ($request->filled('password')) {
+            $user->update([
+                'password' => bcrypt($request->password)
+            ]);
+        }
 
 
         $user->artisanProfile()->updateOrCreate(
@@ -56,6 +77,13 @@ class ArtisanController extends Controller
             ]
         );
 
-        return redirect()->route('artisan.dashboard');
+
+        return redirect()->route('artisan.profile')->with('success', 'Votre profil a été mis à jour avec succès !');
+    }
+    public function settings()
+    {
+        $user = auth()->user();
+        $categories = \App\Models\Category::all(); // جلب جميع الفئات
+        return view('artisan.profile', compact('user', 'categories'));
     }
 }

@@ -13,7 +13,9 @@ class Service extends Model
         'title',
         'description',
         'price',
-        'duration'
+        'duration',
+        'duration_hours', 
+        'image', 
     ];
     public function artisan()
     {
