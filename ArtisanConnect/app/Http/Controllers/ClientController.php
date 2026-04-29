@@ -28,15 +28,12 @@ class ClientController extends Controller
         $categories = Category::all();
         $villes = City::all();
 
-        $query = Service::with(['artisan', 'category']);
+        $query = Service::query()->with(['artisan', 'category']);
 
 
         if ($request->filled('city')) {
-            $query->whereHas('artisan', function ($q) use ($request) {
-                $q->where('city', $request->city);
-            });
+            $query->where('city_id', $request->city);
         }
-
 
         if ($request->filled('category')) {
             $query->where('category_id', $request->category);

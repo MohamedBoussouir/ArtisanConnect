@@ -23,9 +23,8 @@
             <a href="/admin/categories" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
                 <i class="fa-solid fa-list-check mr-3"></i> Catégories
             </a>
-            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
-                <i class="fa-solid fa-flag mr-3"></i> Signalements
-            </a>
+            <a href="/admin/City" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition"><i
+                    class="fa-solid fa-flag mr-3"></i> City</a>
             
             <div class="pt-10 border-t border-gray-800 mt-10">
                 <a href="/" class="flex items-center p-3 rounded-lg hover:bg-blue-900 transition text-blue-400">

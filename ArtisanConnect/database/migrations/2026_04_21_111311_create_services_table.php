@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2)->nullable();
             $table->string('duration')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

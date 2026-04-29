@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\userController;
 use Faker\Guesser\Name;
@@ -56,13 +57,16 @@ Route::post('/admin/users/{user}/toggle', [userController::class, 'toggleStatus'
 
 Route::get('/artisan/profile/edit', [ArtisanController::class, 'edit'])->name('artisan.profile.edit');
 Route::put('/artisan/profile/update', [ArtisanController::class, 'update'])->name('artisan.profile.update');
-
+Route::get('/artisan/reviews', [ArtisanController::class, 'reviews'])->name('artisan.reviews');
 
 Route::get('/artisan/profile/settings', [ArtisanController::class, 'settings'])->name('artisan.profile');
 
 
 Route::get('/artisan/Mon_Portfolio', [ArtisanProfileController::class, 'index'])->name('artisan.Mon_Portfolio');
 Route::get('/artisan/profile/{id}', [ClientController::class, 'showProfile'])->name('artisan.profile');
+
+
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 
 Route::post('/portfolio/store', [ArtisanProfileController::class, 'store'])->name('artisan.portfolio.store');

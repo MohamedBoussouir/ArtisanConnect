@@ -24,10 +24,7 @@
                 class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition {{ request()->routeIs('artisan.bookings') ? 'bg-slate-800 text-white' : '' }}">
                 <i class="fa-solid fa-calendar-check mr-3"></i> Mes Réservations
             </a>
-            <a href="{{ route('artisan.profile.edit') }}"
-                class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
-                <i class="fa-solid fa-user-gear mr-3"></i> Modifier Profil
-            </a>
+            
             <a href="{{ route('artisan.services.index') }}"
                 class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
                 <i class="fa-solid fa-briefcase mr-3"></i> Mes Services
@@ -36,16 +33,27 @@
                 class="flex items-center py-3 px-4 rounded-xl bg-orange-500 text-white transition shadow-lg shadow-orange-500/20">
                 <i class="fa-solid fa-images mr-3"></i> Mon Portfolio
             </a>
-            <a href="#"
-                class="flex items-center py-3 px-4 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition">
-                <i class="fa-solid fa-star mr-3"></i> Avis Clients
-            </a>
-            <div class="pt-10">
-                <a href="/logout"
-                    class="flex items-center py-3 px-4 rounded-xl text-red-400 hover:bg-red-500/10 transition">
-                    <i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion
+            <a href="{{ route('artisan.reviews') }}"
+                    class="flex items-center py-3 px-4 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition group {{ request()->routeIs('artisan.reviews') ? 'bg-slate-800 text-white' : '' }}">
+                    <i class="fa-solid fa-star mr-3 text-orange-400"></i>
+                    Avis Clients
                 </a>
-            </div>
+           <div class="pt-10 border-t border-slate-50">
+                    <a href="{{ route('artisan.profile') }}"
+                        class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium">
+                        <i class="fa-solid fa-user-gear mr-3"></i>
+                        Mon Profil
+                    </a>
+                    <a href="/"
+                        class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium mb-2">
+                        <i class="fa-solid fa-house mr-3 text-sm"></i>
+                        Retour au site
+                    </a>
+                    <a href="/logout"
+                        class="flex items-center py-3 px-4 rounded-xl text-red-400 hover:bg-red-500/10 transition">
+                        <i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion
+                    </a>
+                </div>
         </nav>
     </aside>
 

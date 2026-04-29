@@ -12,9 +12,10 @@ class Booking extends Model
         'artisan_id',
         'appointment_date',
         'appointment_time',
+        'duration_hours',
         'issue_description',
         'status',
-        
+        'duration_hours'
     ];
     public function service()
     {

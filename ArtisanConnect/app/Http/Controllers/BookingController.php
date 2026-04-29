@@ -44,6 +44,7 @@ class BookingController extends Controller
      */
     public function create($id)
     {
+
         $service = Service::findOrFail($id);
 
         return view('client.booking_create', compact('service'));
@@ -55,29 +56,48 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'artisan_id' => 'required',
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required',
-            'duration_hours' => 'required|integer|min:1',
+            'artisan_id'        => 'required',
+            'service_id'        => 'required',
+            'appointment_date'  => 'required|date',
+            'appointment_time'  => 'required',
+            'issue_description' => 'required|string|min:5',
         ]);
+
+        $alreadyBooked = Booking::where('artisan_id', $request->artisan_id)
+            ->where('appointment_date', $request->appointment_date)
+            ->exists();
+
+        $Service = Service::findOrFail($request->service_id);
+        $duration = $Service->duration;
+
 
         $requestedStart = $request->appointment_time;
 
-        $requestedEnd = date('H:i:s', strtotime("$requestedStart + $request->duration_hours hours"));
+        $requestedEnd = date('H:i', strtotime("$requestedStart + $duration hours"));
 
 
-        $isBusy = Booking::where('artisan_id', $request->artisan_id)
+        $dayBookings = Booking::where('artisan_id', $request->artisan_id)
             ->where('appointment_date', $request->appointment_date)
-            ->where(function ($query) use ($requestedStart, $requestedEnd) {
-                $query->whereBetween('appointment_time', [$requestedStart, $requestedEnd])
-                    ->orWhereRaw('? BETWEEN appointment_time AND 
-                        DATE_ADD(appointment_time, INTERVAL duration_hours HOUR)', [$requestedStart]);
-            })
-            ->exists();
+            ->get();
 
-        if ($isBusy) {
-            return back()->with('error', 'L\'artisan est occupé خلال هذه الفترة. يرجى اختيار وقت آخر.');
-        }
+                
+       
+
+        $service = Service::findOrFail($request->service_id);
+
+
+        Booking::create([
+            'user_id'           => auth()->id(),
+            'artisan_id'        => $request->artisan_id,
+            'service_id'        => $request->service_id,
+            'appointment_date'  => $request->appointment_date,
+            'appointment_time'  => $request->appointment_time,
+            'duration_hours'    => $service->duration,
+            'issue_description' => $request->issue_description,
+            'status'            => 'pending',
+        ]);
+
+        return back()->with('success', 'Votre réservation a été effectuée avec succès.');
     }
 
     /**

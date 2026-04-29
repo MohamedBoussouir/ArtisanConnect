@@ -25,8 +25,9 @@
             <a href="/admin/categories" class="flex items-center p-3 rounded-lg hover:bg-gray-800 transition">
                 <i class="fa-solid fa-list-check mr-3"></i> Catégories
             </a>
-            <a href="/admin/cities" class="flex items-center p-3 rounded-lg bg-gray-800 text-white shadow-lg">
-                <i class="fa-solid fa-flag mr-3"></i> Villes
+            
+            <a href="/admin/City" class="flex items-center p-3 rounded-lg bg-gray-800 text-white shadow-lg">
+                <i class="fa-solid fa-flag mr-3"></i> City
             </a>
             
             <div class="pt-10 border-t border-gray-800 mt-10">

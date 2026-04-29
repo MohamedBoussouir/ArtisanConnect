@@ -62,6 +62,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Service::class, 'artisan_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'artisan_id');
+    }
+    public function averageRating()
+    {
+        $avg = $this->reviews()->avg('rating');
+        return $avg ? round($avg, 1) : 0;
+    }
     /**
      * Get the attributes that should be cast.
      *

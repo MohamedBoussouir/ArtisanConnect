@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('appointment_date');
             $table->time('appointment_time');
             $table->text('issue_description');
+            $table->integer('duration_hours')->default(1);
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });

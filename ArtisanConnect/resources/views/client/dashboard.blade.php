@@ -27,14 +27,6 @@
                     <i class="fa-solid fa-calendar-days mr-3"></i>
                     Mes Réservations
                 </a>
-                <a href="#"
-                    class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium">
-                    <i class="fa-solid fa-heart mr-3"></i> Artisans Favoris
-                </a>
-                <a href="#"
-                    class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium">
-                    <i class="fa-solid fa-message mr-3"></i> Messages
-                </a>
                 <div class="pt-8 pb-4">
                     <p class="px-4 text-[10px] font-black uppercase text-slate-400 tracking-widest">Paramètres</p>
                 </div>
@@ -43,10 +35,16 @@
                     <i class="fa-solid fa-user-gear mr-3"></i>
                     Mon Profil
                 </a>
+                <a href="/"
+                    class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium mb-2">
+                    <i class="fa-solid fa-house mr-3 text-sm"></i>
+                    Retour au site
+                </a>
                 <a href="/logout"
                     class="flex items-center py-3 px-4 rounded-xl text-red-400 hover:bg-red-50 transition font-medium">
                     <i class="fa-solid fa-power-off mr-3"></i> Déconnexion
                 </a>
+
             </nav>
         </aside>
 

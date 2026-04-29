@@ -15,31 +15,41 @@ class ServiceController extends Controller
         $services = auth()->user()->services()->latest()->get();
         $categories = \App\Models\Category::all();
 
-        return view('Artisan.services', compact('services', 'user', 'categories','cities'));
+        return view('Artisan.services', compact('services', 'user', 'categories', 'cities'));
     }
     public function store(Request $request)
     {
-        // dd($request);
+
         $request->validate([
-            'title' => 'required|string|max:255',
-            'price' => 'nullable|numeric',
-            'duration' => 'nullable|string',
-            'category_id' => 'nullable',
-            'city_id' => 'nullable',
+            'title'       => 'required|string|max:255',
+            'price'       => 'required|numeric',
+            'duration'    => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+            'city_id'     => 'required|exists:cities,id',
+            'description' => 'required|string|min:10',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
-        // dd($request->category_id);
+
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+
+            $imagePath = $request->file('image')->store('services', 'public');
+        }
+
 
         Service::create([
-            'artisan_id' => auth()->id(),
+            'artisan_id'  => auth()->id(),
             'category_id' => $request->category_id,
-            'city_id' => $request->city_id,
-            'title' => $request->title,
+            'city_id'     => $request->city_id,
+            'title'       => $request->title,
             'description' => $request->description,
-            'price' => $request->price,
-            'duration' => $request->duration,
+            'price'       => $request->price,
+            'duration'    => $request->duration,
+            'image'       => $imagePath,
         ]);
 
-        return back();
+        return back()->with('success', 'Votre service a été publié avec succès !');
     }
 
 

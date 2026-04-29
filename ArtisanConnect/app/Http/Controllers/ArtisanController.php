@@ -86,4 +86,14 @@ class ArtisanController extends Controller
         $categories = \App\Models\Category::all(); // جلب جميع الفئات
         return view('artisan.profile', compact('user', 'categories'));
     }
+    public function reviews()
+    {
+
+        $reviews = \App\Models\Review::where('artisan_id', auth()->id())
+            ->with('client')
+            ->latest()
+            ->paginate(10); 
+
+        return view('Artisan.reviews', compact('reviews'));
+    }
 }

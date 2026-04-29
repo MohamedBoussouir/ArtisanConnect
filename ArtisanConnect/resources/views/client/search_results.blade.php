@@ -48,39 +48,33 @@
                         <div class="flex items-center gap-6 bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
 
                             <div class="flex items-center gap-2 border-r pr-4 border-slate-200">
-                                <a href="/user/dashboard" title="Tableau de bord"
-                                    class="w-9 h-9 flex items-center justify-center text-blue-700 hover:bg-blue-700 hover:text-white transition bg-white rounded-lg shadow-sm border border-blue-100">
-                                    <i class="fa-solid fa-gauge-high text-sm"></i>
-                                </a>
+
+                                @if (Auth::user()->roles === 'artisan' || Auth::user()->roles === 'Admin') 
+                                    <a href="/dashboard" title="Tableau de bord Artisan"
+                                        class="w-9 h-9 flex items-center justify-center text-orange-600 hover:bg-orange-500 hover:text-white transition bg-white rounded-lg shadow-sm border border-orange-100">
+                                        <i class="fa-solid fa-gauge-high text-sm"></i>
+                                    </a>
+                                    
+                                @else
+                                    <a href="/user/dashboard" title="Tableau de bord Client"
+                                        class="w-9 h-9 flex items-center justify-center text-blue-700 hover:bg-blue-700 hover:text-white transition bg-white rounded-lg shadow-sm border border-blue-100">
+                                        <i class="fa-solid fa-gauge-high text-sm"></i>
+                                    </a>
+                                @endif
 
                                 <button title="Mes Favoris"
                                     class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-orange-500 transition hover:bg-white rounded-lg">
                                     <i class="fa-solid fa-heart"></i>
                                 </button>
+                                <div class="border-l pl-4 border-slate-200">
+                                    <a href="{{ route('logout') }}" class="text-slate-400 hover:text-red-500 transition">
+                                        <i class="fa-solid fa-power-off"></i>
+                                    </a>
 
-                                <a href="/profile/settings" title="Paramètres"
-                                    class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-blue-700 transition hover:bg-white rounded-lg">
-                                    <i class="fa-solid fa-user-gear"></i>
-                                </a>
-                            </div>
-
-                            <div class="flex items-center gap-3">
-                                <div class="text-right">
-                                    <p class="text-xs font-black text-slate-800 leading-none">{{ Auth::user()->name }}</p>
-                                    <span class="text-[9px] text-orange-600 font-black uppercase tracking-tighter">
-                                        {{ Auth::user()->role === 'artisan' ? 'Artisan Partenaire' : 'Membre Particulier' }}
-                                    </span>
                                 </div>
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=1E3A8A&color=fff"
-                                    class="w-9 h-9 rounded-xl shadow-sm border-2 border-white">
                             </div>
 
-                            <div class="border-l pl-4 border-slate-200">
-                                <a href="{{ route('logout') }}" class="text-slate-400 hover:text-red-500 transition">
-                                    <i class="fa-solid fa-power-off"></i>
-                                </a>
 
-                            </div>
                         </div>
                     @endauth
                 </div>
@@ -112,43 +106,53 @@
                     <form action="{{ route('artisans.search') }}" method="GET" class="space-y-6">
                         <div>
                             <label
-                                class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Métier</label>
-                            <select name="category"
-                                class="w-full bg-slate-50 border-none rounded-xl py-3 px-4 font-bold text-slate-700 focus:ring-2 focus:ring-blue-500 cursor-pointer outline-none">
-                                <option value="">Tous les métiers</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ request('category') == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Métier</label>
+                            <div class="relative">
+                                <select name="category"
+                                    class="w-full bg-slate-50 border-none rounded-2xl py-4 px-5 font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 cursor-pointer outline-none appearance-none shadow-sm shadow-slate-100">
+                                    <option value="">Tous les métiers</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ request('category') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
                         </div>
 
                         <div>
                             <label
-                                class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Ville</label>
-                            <select name="city"
-                                class="w-full bg-slate-50 border-none rounded-xl py-3 px-4 font-bold text-slate-700 focus:ring-2 focus:ring-blue-500 cursor-pointer outline-none">
-                                <option value="">Toutes les villes</option>
-
-
-                                @foreach ($villes as $v)
-                                    <option value="{{ $v->name }}"
-                                        {{ request('city') == $v->name ? 'selected' : '' }}>
-                                        {{ $v->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Ville</label>
+                            <div class="relative">
+                                <select name="city"
+                                    class="w-full bg-slate-50 border-none rounded-2xl py-4 px-5 font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 cursor-pointer outline-none appearance-none shadow-sm shadow-slate-100">
+                                    <option value="">Toutes les villes</option>
+                                    @foreach ($villes as $v)
+                                        <option value="{{ $v->id }}"
+                                            {{ request('city') == $v->id ? 'selected' : '' }}>
+                                            {{ $v->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
                         </div>
 
                         <button type="submit"
-                            class="w-full py-4 bg-blue-700 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-900 transition shadow-lg shadow-blue-100">
+                            class="w-full py-4 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-blue-700 transition-all duration-300 shadow-xl shadow-blue-200 hover:-translate-y-1 active:scale-95">
                             Appliquer
                         </button>
 
                         <a href="{{ route('artisans.search') }}"
-                            class="block text-center text-[10px] font-bold text-slate-400 hover:text-orange-500 uppercase tracking-widest">
+                            class="block text-center text-[10px] font-black text-slate-400 hover:text-red-500 uppercase tracking-[0.2em] transition-colors duration-300">
                             Réinitialiser
                         </a>
                     </form>
@@ -166,61 +170,87 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     @forelse($services as $service)
                         <div
-                            class="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-all group relative overflow-hidden">
+                            class="group relative bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
 
-                            <span
-                                class="absolute top-0 right-0 bg-orange-100 text-orange-600 text-[10px] font-black px-4 py-1.5 rounded-bl-2xl uppercase shadow-sm">
-                                {{ $service->category->name ?? 'Service' }}
-                            </span>
+                            <div class="relative h-56 overflow-hidden">
+                                @if ($service->image)
+                                    <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                                @else
+                                    <div class="w-full h-full bg-slate-100 flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-4xl text-slate-200"></i>
+                                    </div>
+                                @endif
 
-                            <div class="flex items-center gap-4 mb-4">
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode($service->artisan->name) }}&background=1E3A8A&color=fff"
-                                    class="w-12 h-12 rounded-xl border-2 border-white shadow-sm">
-                                <div>
-                                    <h4 class="font-black text-slate-800 leading-tight">{{ $service->title }}</h4>
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                        Par {{ $service->artisan->name }}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <p class="text-slate-500 text-xs mb-6 line-clamp-2 italic font-medium">
-                                {{ $service->description }}
-                            </p>
-
-                            <div class="flex items-center justify-between bg-slate-50 p-4 rounded-2xl mb-6">
-                                <div class="flex flex-col">
-                                    <span class="text-[10px] text-slate-400 font-black uppercase">Prix Fixe</span>
-                                    <span class="text-lg font-black text-slate-800">{{ $service->price }} DH</span>
-                                </div>
-
-                                <div class="text-right">
-                                    <span class="text-[10px] text-slate-400 font-black uppercase block">Ville</span>
-                                    <span class="text-xs font-bold text-slate-600 flex items-center justify-end gap-1">
-                                        <i class="fa-solid fa-location-dot text-orange-500"></i>
-                                        {{ $service->city->name ?? 'Maroc' }}
+                                <div class="absolute top-4 left-4">
+                                    <span
+                                        class="bg-white/90 backdrop-blur-md text-blue-600 text-[10px] font-black px-4 py-2 rounded-2xl uppercase tracking-widest shadow-sm">
+                                        {{ $service->category->name ?? 'Service' }}
                                     </span>
                                 </div>
+
+                                <div class="absolute bottom-4 right-4">
+                                    <div
+                                        class="bg-slate-900/80 backdrop-blur-md text-white px-4 py-2 rounded-2xl shadow-lg">
+                                        <span class="text-xs font-black">{{ $service->price }} DH</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="flex gap-2">
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($service->artisan->name) }}&background=1E3A8A&color=fff"
+                                        class="w-10 h-10 rounded-xl border-2 border-white shadow-md">
+                                    <div class="overflow-hidden">
+                                        <h4
+                                            class="font-black text-slate-800 leading-tight truncate group-hover:text-blue-600 transition-colors">
+                                            {{ $service->title }}</h4>
+                                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">
+                                            Par {{ $service->artisan->name }}
+                                        </p>
+                                    </div>
+                                </div>
 
-                                <a href="/artisan/profile/{{ $service->artisan->id }}"
-                                    class="flex-1 py-3 bg-slate-100 text-slate-600 text-center rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-slate-200 transition">
-                                    Profil
-                                </a>
-                                <a href="{{ route('services.show', $service->id) }}"
-                                    class="flex-[2] py-3 bg-slate-900 text-white text-center rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-blue-600 transition shadow-lg flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    Voir Détails
-                                </a>
+                                <div class="space-y-3 mb-6">
+                                    <p class="text-slate-500 text-xs line-clamp-2 italic leading-relaxed">
+                                        {{ $service->description }}
+                                    </p>
+
+                                    <div
+                                        class="flex items-center gap-4 text-[10px] font-black uppercase tracking-tighter text-slate-400">
+                                        <span class="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg">
+                                            <i class="fa-regular fa-clock text-orange-500"></i>
+                                            {{ $service->duration ?? '2' }}H
+                                        </span>
+                                        <span class="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg">
+                                            <i class="fa-solid fa-location-dot text-blue-500"></i>
+                                            {{ $service->city->name ?? 'Maroc' }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-3">
+                                    <a href="/artisan/profile/{{ $service->artisan->id }}"
+                                        class="p-3 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-blue-600 transition shadow-sm">
+                                        <i class="fa-solid fa-user"></i>
+                                    </a>
+                                    <a href="{{ route('services.show', $service->id) }}"
+                                        class="flex-1 py-3 bg-slate-900 text-white text-center rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] hover:bg-blue-600 transition shadow-lg shadow-blue-100 flex items-center justify-center gap-2">
+                                        Voir Détails
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     @empty
                         <div
-                            class="col-span-full py-20 text-center bg-white rounded-[2.5rem] border-4 border-dashed border-slate-50">
-                            <i class="fa-solid fa-magnifying-glass text-5xl text-slate-200 mb-4"></i>
-                            <p class="text-slate-400 font-bold italic">Aucun service trouvé pour ces critères.</p>
+                            class="col-span-full py-32 text-center bg-white rounded-[3rem] border-4 border-dashed border-slate-50">
+                            <div class="relative inline-block mb-6">
+                                <div class="absolute inset-0 bg-blue-100 rounded-full blur-2xl opacity-50"></div>
+                                <i class="fa-solid fa-magnifying-glass text-6xl text-slate-200 relative"></i>
+                            </div>
+                            <p class="text-slate-400 font-black uppercase tracking-widest text-sm">Désolé, aucun
+                                service trouvé</p>
+                            <p class="text-slate-300 text-xs mt-2">Essayez de changer les critères de filtrage.</p>
                         </div>
                     @endforelse
                 </div>
