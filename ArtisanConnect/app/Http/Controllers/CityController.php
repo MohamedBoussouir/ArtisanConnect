@@ -38,7 +38,7 @@ class CityController extends Controller
         ]);
 
         
-        \App\Models\City::create([
+        City::create([
             'name' => $request->name
         ]);
 

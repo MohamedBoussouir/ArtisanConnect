@@ -97,7 +97,7 @@ class BookingController extends Controller
             'status'            => 'pending',
         ]);
 
-        return back()->with('success', 'Votre réservation a été effectuée avec succès.');
+        return redirect("/client/bookings")->with('success', 'Votre réservation a été effectuée avec succès.');
     }
 
     /**

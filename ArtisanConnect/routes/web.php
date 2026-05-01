@@ -63,7 +63,7 @@ Route::get('/artisan/profile/settings', [ArtisanController::class, 'settings'])-
 
 
 Route::get('/artisan/Mon_Portfolio', [ArtisanProfileController::class, 'index'])->name('artisan.Mon_Portfolio');
-Route::get('/artisan/profile/{id}', [ClientController::class, 'showProfile'])->name('artisan.profile');
+Route::get('/artisan/profile/{id}', [ClientController::class, 'showProfile'])->name('artisan.profile.id');
 
 
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');

@@ -36,6 +36,11 @@
                     class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium">
                     <i class="fa-solid fa-user-gear mr-3"></i> Mon Profil
                 </a>
+                <a href="/"
+                    class="flex items-center py-3 px-4 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-blue-700 transition font-medium mb-2">
+                    <i class="fa-solid fa-house mr-3 text-sm"></i>
+                    Retour au site
+                </a>
 
                 <a href="{{ route('logout') }}"
                     class="w-full flex items-center py-3 px-4 rounded-xl text-red-400 hover:bg-red-50 transition font-medium group">
@@ -62,7 +67,34 @@
                         class="w-10 h-10 rounded-xl border-2 border-white shadow-sm">
                 </div>
             </header>
+            @if (session('success'))
+                <div id="success-alert"
+                    class="mx-10 mt-6 flex items-center p-4 bg-green-50 border-l-4 border-green-500 rounded-2xl shadow-sm animate-bounce-short">
+                    <div
+                        class="flex-shrink-0 w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-xs font-black uppercase tracking-widest text-green-800">Succès !</p>
+                        <p class="text-[11px] font-bold text-green-600 italic">{{ session('success') }}</p>
+                    </div>
+                    <button onclick="document.getElementById('success-alert').remove()"
+                        class="ml-auto text-green-400 hover:text-green-600 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
 
+                <script>
+                    setTimeout(() => {
+                        const alert = document.getElementById('success-alert');
+                        if (alert) {
+                            alert.style.transition = "opacity 0.5s ease";
+                            alert.style.opacity = "0";
+                            setTimeout(() => alert.remove(), 500);
+                        }
+                    }, 5000);
+                </script>
+            @endif
             <div class="p-10">
                 <div class="space-y-6">
                     <div class="flex justify-between items-center px-2">
@@ -73,22 +105,32 @@
                     @forelse($bookings as $booking)
                         <div
                             class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+
                             <div class="flex items-center gap-4">
                                 <div
                                     class="w-16 h-16 bg-slate-900 text-white rounded-3xl flex flex-col items-center justify-center shadow-lg shadow-slate-200">
-                                    <span
-                                        class="text-[8px] font-black uppercase opacity-60">{{ \Carbon\Carbon::parse($booking->appointment_date)->translatedFormat('M') }}</span>
-                                    <span
-                                        class="text-xl font-black italic">{{ \Carbon\Carbon::parse($booking->appointment_date)->format('d') }}</span>
+                                    <span class="text-[8px] font-black uppercase opacity-60">
+                                        {{ \Carbon\Carbon::parse($booking->appointment_date)->translatedFormat('M') }}
+                                    </span>
+                                    <span class="text-xl font-black italic">
+                                        {{ \Carbon\Carbon::parse($booking->appointment_date)->format('d') }}
+                                    </span>
                                 </div>
 
                                 <div>
                                     <h4 class="font-black text-slate-800 uppercase italic leading-none">
-                                        {{ $booking->service->title }}</h4>
+                                        {{ $booking->service->title }}
+                                    </h4>
+
                                     <p class="text-xs text-slate-400 mt-2 font-medium italic tracking-tight">
-                                        Artisan: <span
-                                            class="text-blue-600 font-bold underline">{{ $booking->artisan->name }}</span>
+                                        Artisan:
+                                        
+                                        <a href="{{ route('artisan.profile.id', $booking->artisan->id) }}"
+                                            class="text-blue-600 font-bold underline hover:text-orange-500 transition">
+                                            {{ $booking->artisan->name }}
+                                        </a>
                                     </p>
+
                                     <p class="text-[10px] text-slate-500 mt-1 font-bold">
                                         <i class="fa-solid fa-clock text-orange-500 mr-1"></i>
                                         {{ $booking->appointment_time }}
@@ -97,16 +139,19 @@
                             </div>
 
                             <div class="flex flex-col items-end gap-3 w-full md:w-auto">
+
                                 <span
                                     class="px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest 
-                                @if ($booking->status == 'pending') bg-orange-100 text-orange-600 
-                                @elseif($booking->status == 'accepted') bg-green-100 text-green-600 
-                                @else bg-red-100 text-red-600 @endif">
+                @if ($booking->status == 'pending') bg-orange-100 text-orange-600 
+                @elseif($booking->status == 'accepted') bg-green-100 text-green-600 
+                @else bg-red-100 text-red-600 @endif">
                                     {{ $booking->status }}
                                 </span>
 
+
                                 @if ($booking->status === 'pending')
-                                    <form action="{{ route('client.bookings.destroy', $booking->id) }}" method="POST">
+                                    <form action="{{ route('client.bookings.destroy', $booking->id) }}" method="POST"
+                                        onsubmit="return confirm('Voulez-vous vraiment annuler cette réservation ?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
@@ -124,8 +169,9 @@
                             <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Aucune réservation
                                 trouvée</p>
                             <a href="/"
-                                class="inline-block mt-4 text-blue-600 font-black text-[10px] uppercase underline">Chercher
-                                un artisan</a>
+                                class="inline-block mt-4 text-blue-600 font-black text-[10px] uppercase underline">
+                                Chercher un artisan
+                            </a>
                         </div>
                     @endforelse
 

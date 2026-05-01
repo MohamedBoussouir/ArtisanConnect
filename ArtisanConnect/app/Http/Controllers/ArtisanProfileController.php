@@ -36,17 +36,17 @@ class ArtisanProfileController extends Controller
     }
     public function destroy(Portfolio $portfolio)
     {
-        // 1. الأمان: التأكد أن الحرفي يحذف صوره هو فقط
+        
         if ($portfolio->artisan_id !== auth()->id()) {
-            abort(403, 'Action غير مصرح بها');
+            abort(403, '403');
         }
 
-        // 2. حذف ملف الصورة الحقيقي من السيرفر (Storage) لتوفير المساحة
+        
         if (Storage::disk('public')->exists($portfolio->image_path)) {
             Storage::disk('public')->delete($portfolio->image_path);
         }
 
-        // 3. حذف السجل من قاعدة البيانات
+        
         $portfolio->delete();
 
         return back()->with('success', 'La réalisation a été supprimée !');

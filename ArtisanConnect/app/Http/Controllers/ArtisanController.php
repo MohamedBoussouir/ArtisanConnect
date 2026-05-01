@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ArtisanController extends Controller
@@ -60,7 +61,7 @@ class ArtisanController extends Controller
             'phone' => $request->phone,
             'city' => $request->city,
         ]);
-
+ 
 
         if ($request->filled('password')) {
             $user->update([
@@ -83,7 +84,7 @@ class ArtisanController extends Controller
     public function settings()
     {
         $user = auth()->user();
-        $categories = \App\Models\Category::all(); // جلب جميع الفئات
+        $categories = Category::all(); 
         return view('artisan.profile', compact('user', 'categories'));
     }
     public function reviews()
