@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Auth;
 use App\Http\Middleware\CheckRoles;
+use App\Http\Middleware\CheckBanned;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'CheckRoles' => CheckRoles::class,
-            'Auth' => Auth::class
+            'Auth' => Auth::class,
+            'CheckBanned' => CheckBanned::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

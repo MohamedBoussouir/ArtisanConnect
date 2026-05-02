@@ -20,8 +20,7 @@ class CheckRoles
         }
 
         $role = auth()->user()->roles;
-
-       
+        
         if (
             ($role === 'Admin' && ($request->is('admin') || $request->is('admin/*'))) ||
             ($role === 'artisan' && ($request->is('artisan') || $request->is('artisan/*'))) ||
@@ -29,8 +28,6 @@ class CheckRoles
         ) {
             return $next($request);
         }
-
-        
         switch ($role) {
             case 'Admin':
                 return redirect()->route('admin.dashboard');

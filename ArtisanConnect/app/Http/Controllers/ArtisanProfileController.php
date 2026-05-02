@@ -45,8 +45,6 @@ class ArtisanProfileController extends Controller
         if (Storage::disk('public')->exists($portfolio->image_path)) {
             Storage::disk('public')->delete($portfolio->image_path);
         }
-
-        
         $portfolio->delete();
 
         return back()->with('success', 'La réalisation a été supprimée !');
