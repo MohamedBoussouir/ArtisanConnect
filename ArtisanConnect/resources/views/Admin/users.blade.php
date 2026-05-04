@@ -30,12 +30,9 @@
                 <a href="/" class="flex items-center p-3 rounded-lg hover:bg-blue-900 transition text-blue-400">
                     <i class="fa-solid fa-house mr-3"></i> Retour au Site
                 </a>
-                <form action="/logout" method="POST">
-                    @csrf
-                    <button type="submit" class="w-full flex items-center p-3 rounded-lg hover:bg-red-900 transition text-red-400 mt-2">
-                        <i class="fa-solid fa-power-off mr-3"></i> Déconnexion
-                    </button>
-                </form>
+                <a href="/logout"
+                    class="flex items-center p-3 rounded-lg hover:bg-red-900 transition text-red-400 mt-2"><i
+                        class="fa-solid fa-power-off mr-3"></i> Déconnexion</a>
             </div>
         </nav>
     </aside>

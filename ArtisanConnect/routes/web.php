@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 // ---------------------------Visiteur---------------------------
 Route::get('/', [ClientController::class, 'index']);
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
+Route::get('/search', [ClientController::class, 'search'])->name('artisans.search');
+
 Route::middleware(['Auth','CheckBanned'])->group(function () {
     Route::middleware(['Auth', 'CheckRoles'])->group(function () {
         Route::get('/dashboard', function () {})->name('dashboard');
@@ -68,7 +68,6 @@ Route::middleware(['Auth','CheckBanned'])->group(function () {
     Route::delete('/services/{service}', [ServiceController::class, 'destroy'])->name('artisan.services.destroy');
     Route::get('/service/{id}', [ClientController::class, 'showService'])->name('services.show');
 
-    Route::get('/search', [ClientController::class, 'search'])->name('artisans.search');
 
 
     Route::get('/admin/City', [CityController::class, 'index'])->name('cities.index');
